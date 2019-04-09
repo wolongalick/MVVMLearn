@@ -1,6 +1,8 @@
 package com.alick.mvvmlearn.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,22 +25,22 @@ public class HolderView extends FrameLayout {
     private LoadingView loadingView;
     private View realContentView;
 
-    public HolderView(@androidx.annotation.NonNull Context context) {
+    public HolderView(@NonNull Context context) {
         this(context, null);
     }
 
-    public HolderView(@androidx.annotation.NonNull Context context, @androidx.annotation.Nullable AttributeSet attrs) {
+    public HolderView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public HolderView(@androidx.annotation.NonNull Context context, @androidx.annotation.Nullable AttributeSet attrs, int defStyleAttr) {
+    public HolderView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         init();
     }
 
     private void init() {
-        this.setId(R.id.holder_view_id);
+        this.setId(R.id.holderView);
         loadingView = new LoadingView(context);
         failView = new FailView(context);
         emptyView = new EmptyView(context);
@@ -99,4 +101,15 @@ public class HolderView extends FrameLayout {
         fillLayout();
         showRealContentView();
     }
+
+    public void setOnReloadListener(final OnReloadListener onReloadListener){
+        failView.setOnReloadListener(new OnReloadListener() {
+            @Override
+            public void onReload() {
+                showLoadingView();
+                onReloadListener.onReload();
+            }
+        });
+    }
+
 }

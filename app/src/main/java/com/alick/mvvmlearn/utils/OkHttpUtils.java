@@ -1,5 +1,7 @@
 package com.alick.mvvmlearn.utils;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -24,7 +26,7 @@ import okhttp3.ResponseBody;
  */
 public class OkHttpUtils {
 
-    public static final String BASE_URL = "https://api.github.com";
+    public static final String BASE_URL = "https://api.github.com/";
 
     private OkHttpClient client = null;
 
@@ -57,13 +59,13 @@ public class OkHttpUtils {
     }
 
 
-    public interface OkCallback<Entity> {
-        void onSuccess(Entity entity);
+    public interface OkCallback<Data> {
+        void onSuccess(Data data);
 
         void onFail(Throwable throwable);
     }
 
-    public <Entity> void requestGet(String url, Map<String, Object> params, final OkCallback<Entity> okCallback) {
+    public <Data> void requestGet(String url, Map<String, Object> params, final OkCallback<Data> okCallback) {
         Request.Builder builder = new Request.Builder();
         Request request;
         if (params == null || params.size() == 0) {
@@ -102,8 +104,16 @@ public class OkHttpUtils {
                 try {
                     String string = body.string();
                     Type[] types = ((ParameterizedType) okCallback.getClass().getGenericInterfaces()[0]).getActualTypeArguments();
-                    Entity entity = JsonUtils.parseJson(string, types[0]);
-                    okCallback.onSuccess(entity);
+                    Type type = types[0];
+                    if(type.toString().contains("java.util.List")){
+                        Class aClass= (Class) ((ParameterizedType) type).getActualTypeArguments()[0];
+                        Data data= (Data) JSON.parseArray(string, aClass);
+                        okCallback.onSuccess(data);
+                    }else {
+                        Data data = JsonUtils.parseJson2Bean(string, type);
+                        okCallback.onSuccess(data);
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     okCallback.onFail(new Throwable("解析内容失败"));

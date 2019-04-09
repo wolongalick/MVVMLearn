@@ -2,74 +2,95 @@ package com.alick.mvvmlearn.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alick.mvvmlearn.R;
+import com.alick.mvvmlearn.base.BaseActivity;
+import com.alick.mvvmlearn.constant.IntentKey;
+import com.alick.mvvmlearn.databinding.ActivityMainBinding;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.viewmodel.UserViewModel;
-import com.alick.mvvmlearn.widget.HolderView;
+import com.alick.mvvmlearn.widget.OnReloadListener;
 
-public class MainActivity extends AppCompatActivity {
-    private EditText et_username;
-    private TextView tv_userinfo;
-    private Button btn_serach;
+public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
 
     private UserViewModel userViewModel;
-    private HolderView holderView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initViews();
-
-        initData();
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
-    private void initViews() {
-        tv_userinfo=findViewById(R.id.tv_userinfo);
-        et_username=findViewById(R.id.et_username);
-        btn_serach =findViewById(R.id.btn_serach);
+    /**
+     * 搜索用户
+     */
+    private void searchUser() {
+        String username = mBinding.etUsername.getText().toString().trim();
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(getApplicationContext(), "请输入用户名", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        userViewModel.reload(username);
+    }
 
-        holderView=findViewById(R.id.holder_view_id);
 
-        btn_serach.setOnClickListener(new View.OnClickListener() {
+    /**
+     * 初始化视图
+     */
+    @Override
+    public void initViews() {
+
+    }
+
+    /**
+     * 初始化监听
+     */
+    @Override
+    public void initListener() {
+        mBinding.btnSerach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = et_username.getText().toString().trim();
+                searchUser();
+                mBinding.holderView.showLoadingView();
+            }
+        });
 
-                if(TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(),"请输入用户名",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        mBinding.holderView.setOnReloadListener(new OnReloadListener() {
+            @Override
+            public void onReload() {
+                searchUser();
+            }
+        });
 
-                holderView.showLoadingView();
-                userViewModel.reload(username);
+        mBinding.btnGoProjectList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ProjectListActivity.class).putExtra(IntentKey.USERNAME,mBinding.getUser().getLogin()));
             }
         });
     }
 
-    private void initData() {
+    /**
+     * 初始化数据
+     */
+    @Override
+    public void initData() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.getUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {
-                    tv_userinfo.setText(user.toString());
-                    holderView.showRealContentView();
+                    mBinding.setUser(user);
+                    mBinding.holderView.showRealContentView();
+                }else {
+                    mBinding.holderView.showFailView();
                 }
             }
         });
     }
-
 }

@@ -47,7 +47,7 @@ public class RemoteUserDataSource implements UserDataSource {
         params.put("nickname","小鸡子");
         params.put("age","28");
 
-        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "/users/wolongalick",params, new OkHttpUtils.OkCallback<User>() {
+        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<User>() {
             @Override
             public void onSuccess(User user) {
                 if (user != null) {
@@ -59,6 +59,7 @@ public class RemoteUserDataSource implements UserDataSource {
 
             @Override
             public void onFail(Throwable throwable) {
+                userMutableLiveData.postValue(null);
                 throwable.printStackTrace();
             }
         });

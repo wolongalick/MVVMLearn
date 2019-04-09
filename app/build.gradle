@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.alick.mvvmlearn"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -15,18 +15,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled true
+    }
 }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     // retrofit
+    implementation project(':androidLibrary')
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
     // room
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-    implementation 'androidx.annotation:annotation:1.0.2'
-    implementation 'com.google.code.gson:gson:2.2.4'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.alibaba:fastjson:1.2.56'
+    implementation 'me.drakeet.multitype:multitype:3.4.4'//注意不要升级此版本,否则会引入androidx包
+    implementation 'org.jetbrains:annotations-java5:15.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 }

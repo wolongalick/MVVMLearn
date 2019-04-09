@@ -1,37 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/et_username"
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.alick.mvvmlearn.model.User" />
+
+        <variable
+            name="user"
+            type="com.alick.mvvmlearn.model.User" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="请输入用户名"
-        android:text="wolongalick" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.MainActivity">
 
-    <Button
-        android:id="@+id/btn_serach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="搜索" />
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入用户名"
+            android:text="wolongalick" />
 
-    <com.alick.mvvmlearn.widget.HolderView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tv_userinfo"
+        <Button
+            android:id="@+id/btnSerach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:layout_gravity="right"
+            android:text="搜索" />
 
-    </com.alick.mvvmlearn.widget.HolderView>
+        <com.alick.mvvmlearn.widget.HolderView
+            android:id="@+id/holderView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{user!=null ? View.VISIBLE : View.GONE}">
+
+                <Button
+                    android:id="@+id/btnGoProjectList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="进入项目列表" />
+
+                <TextView
+                    android:id="@+id/tvUserinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.toString()}" />
+            </LinearLayout>
+
+        </com.alick.mvvmlearn.widget.HolderView>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

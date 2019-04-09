@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="holder_view_id" type="id"/>
+    <item name="holderView" type="id"/>
 </resources>

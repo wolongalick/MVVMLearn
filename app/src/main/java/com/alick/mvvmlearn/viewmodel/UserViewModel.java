@@ -14,12 +14,6 @@ public class UserViewModel extends ViewModel {
     private LiveData<User> ldUser;
     private MutableLiveData<String> ldUsername;
 
-    /*public LiveData<User> getUser(String username) {
-        if (null == user)
-            user = userRepository.getUser(username);
-        return user;
-    }*/
-
     public LiveData<User> getUser() {
         if (null == ldUser) {
             ldUsername = new MutableLiveData<>();

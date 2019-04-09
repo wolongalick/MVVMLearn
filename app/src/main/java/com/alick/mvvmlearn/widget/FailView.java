@@ -1,13 +1,14 @@
 package com.alick.mvvmlearn.widget;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.alick.mvvmlearn.R;
 
-import androidx.annotation.Nullable;
 
 /**
  * @author 崔兴旺
@@ -37,7 +38,15 @@ public class FailView extends LinearLayout {
 
     private void init() {
         rootView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_fail_view, this);
+
     }
 
-
+    public void setOnReloadListener(final OnReloadListener onReloadListener) {
+        rootView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onReloadListener.onReload();
+            }
+        });
+    }
 }

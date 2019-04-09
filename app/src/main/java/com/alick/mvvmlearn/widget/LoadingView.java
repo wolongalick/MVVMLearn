@@ -1,13 +1,12 @@
 package com.alick.mvvmlearn.widget;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import com.alick.mvvmlearn.R;
-
-import androidx.annotation.Nullable;
 
 /**
  * @author 崔兴旺
