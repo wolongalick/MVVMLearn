@@ -19,7 +19,7 @@ public class ProjectListViewModel extends ViewModel {
 
     private MutableLiveData<List<Project>> listMutableLiveData;
 
-    public MutableLiveData<List<Project>> getListMutableLiveData(String username) {
+    public MutableLiveData<List<Project>> getListMutableLiveData(String username,int pageNum,int pageSize) {
         if(listMutableLiveData==null){
             listMutableLiveData = new MutableLiveData<>();
         }

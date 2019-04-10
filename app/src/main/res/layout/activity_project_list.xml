@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            <com.alick.mvvmlearn.widget.WySmartRefreshLayout
                 android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            </com.alick.mvvmlearn.widget.WySmartRefreshLayout>
 
 
         </com.alick.mvvmlearn.widget.HolderView>
