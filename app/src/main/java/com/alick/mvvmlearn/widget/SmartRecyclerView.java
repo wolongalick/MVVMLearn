@@ -1,10 +1,13 @@
 package com.alick.mvvmlearn.widget;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
 import com.alick.mvvmlearn.R;
+import com.alick.mvvmlearn.databinding.LayoutSmartRecyclerViewBinding;
 
 /**
  * @author 崔兴旺
@@ -15,7 +18,9 @@ import com.alick.mvvmlearn.R;
  */
 public class SmartRecyclerView extends WySmartRefreshLayout{
     private Context context;
-    private WySmartRefreshLayout view;
+    private RecyclerView recyclerView;
+
+    private LayoutSmartRecyclerViewBinding mbinding;
 
     public SmartRecyclerView(Context context) {
         this(context,null);
@@ -32,10 +37,12 @@ public class SmartRecyclerView extends WySmartRefreshLayout{
     }
 
     private void init(){
-        view = (WySmartRefreshLayout) LayoutInflater.from(context).inflate(R.layout.layout_smart_recycler_view, this);
+        mbinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_smart_recycler_view, null, false);
+        recyclerView=mbinding.recyclerView;
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(context));
     }
 
-
-
-
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 }

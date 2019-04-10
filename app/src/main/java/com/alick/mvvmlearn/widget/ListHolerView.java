@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
 /**
  * @author 崔兴旺
  * @package com.alick.mvvmlearn.widget
@@ -17,7 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
  */
 public class ListHolerView extends HolderView {
     private Context context;
-    private SmartRefreshLayout smartRefreshLayout;
+    private SmartRecyclerView smartRecyclerView;
 
     public ListHolerView(@NonNull Context context) {
         this(context,null);
@@ -34,11 +32,15 @@ public class ListHolerView extends HolderView {
 
     protected void init(){
         super.init();
-        smartRefreshLayout=new SmartRecyclerView(context);
+        smartRecyclerView =new SmartRecyclerView(context);
     }
 
     @Override
     protected View getRealContentView() {
-        return smartRefreshLayout;
+        return smartRecyclerView;
+    }
+
+    public SmartRecyclerView getSmartRecyclerView() {
+        return smartRecyclerView;
     }
 }

@@ -14,11 +14,7 @@
         <com.alick.mvvmlearn.widget.ListHolerView
             android:id="@+id/holderView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </com.alick.mvvmlearn.widget.ListHolerView>
-
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </layout>

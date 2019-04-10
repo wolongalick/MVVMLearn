@@ -2,7 +2,6 @@ package com.alick.mvvmlearn.view;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alick.mvvmlearn.R;
@@ -11,13 +10,9 @@ import com.alick.mvvmlearn.constant.Constant;
 import com.alick.mvvmlearn.constant.IntentKey;
 import com.alick.mvvmlearn.databinding.ActivityProjectListBinding;
 import com.alick.mvvmlearn.model.Project;
-import com.alick.mvvmlearn.utils.RefreshLoadMoreUtils;
 import com.alick.mvvmlearn.viewbinder.ProjectViewBinder;
 import com.alick.mvvmlearn.viewmodel.ProjectListViewModel;
 import com.alick.mvvmlearn.widget.OnReloadListener;
-import com.alick.mvvmlearn.widget.WrapContentLinearLayoutManager;
-import com.alick.mvvmlearn.widget.WySmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +56,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
         adapter = new MultiTypeAdapter();
         adapter.register(Project.class, projectViewBinder);
         adapter.setItems(allProjects);
-        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this));
-        mBinding.recyclerView.setAdapter(adapter);
+        mBinding.holderView.getSmartRecyclerView().getRecyclerView().setAdapter(adapter);
     }
 
     /**
@@ -77,7 +71,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
             }
         });
 
-        mBinding.refreshLayout.setOnWyRefreshListener(new WySmartRefreshLayout.OnWyRefreshListener() {
+        /*mBinding.refreshLayout.setOnWyRefreshListener(new WySmartRefreshLayout.OnWyRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout, int pageSize) {
                 projectListViewModel.getListMutableLiveData(username, Constant.DEFAULT_FIRST_PAGE_NUM, pageSize);
@@ -87,7 +81,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
             public void onLoadMore(@NonNull RefreshLayout refreshLayout, int pageNum, int pageSize) {
                 projectListViewModel.getListMutableLiveData(username, pageNum, pageSize);
             }
-        });
+        });*/
     }
 
     /**
@@ -101,7 +95,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
         listMutableLiveData.observe(this, new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> projects) {
-                RefreshLoadMoreUtils.updateData(mBinding.holderView,mBinding.refreshLayout,adapter,allProjects,projects,projects!=null);
+//                RefreshLoadMoreUtils.updateData(mBinding.holderView,mBinding.refreshLayout,adapter,allProjects,projects,projects!=null);
             }
         });
     }
