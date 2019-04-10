@@ -3,7 +3,6 @@ package com.alick.mvvmlearn.view;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.alick.mvvmlearn.R;
 import com.alick.mvvmlearn.base.BaseActivity;
@@ -13,6 +12,12 @@ import com.alick.mvvmlearn.model.Project;
 import com.alick.mvvmlearn.viewbinder.ProjectViewBinder;
 import com.alick.mvvmlearn.viewmodel.ProjectListViewModel;
 import com.alick.mvvmlearn.widget.OnReloadListener;
+import com.alick.mvvmlearn.widget.WrapContentLinearLayoutManager;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
     private ProjectListViewModel projectListViewModel;
     private String username;
     private ProjectViewBinder projectViewBinder;
-    private List<Project> projects;
+    private List<Project> allProjects;
     private MultiTypeAdapter adapter;
     private MutableLiveData<List<Project>> listMutableLiveData;
 
@@ -50,14 +55,18 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
     @Override
     public void initViews() {
         username = getIntent().getStringExtra(IntentKey.USERNAME);
-        projects = new ArrayList<>();
+        allProjects = new ArrayList<>();
         projectViewBinder = new ProjectViewBinder();
 
         adapter = new MultiTypeAdapter();
         adapter.register(Project.class, projectViewBinder);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setItems(allProjects);
+        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(adapter);
     }
+
+    private boolean isLoadmoring;
+
 
     /**
      * 初始化监听
@@ -70,6 +79,22 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
                 projectListViewModel.getListMutableLiveData(username);
             }
         });
+
+        mBinding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NotNull RefreshLayout refreshlayout) {
+                isLoadmoring=false;
+                projectListViewModel.getListMutableLiveData(username);
+            }
+        });
+        mBinding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NotNull RefreshLayout refreshlayout) {
+                isLoadmoring=true;
+                projectListViewModel.getListMutableLiveData(username);
+            }
+        });
+
     }
 
     /**
@@ -83,18 +108,36 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
         listMutableLiveData.observe(this, new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> projects) {
-                if(projects!=null){
-                    if(!projects.isEmpty()){
-                        adapter.setItems(projects);
-                        adapter.notifyDataSetChanged();
-                        mBinding.holderView.showRealContentView();
-                    }else {
-                        adapter.setItems(projects);
+                if (projects != null) {
+                    if (!projects.isEmpty()) {
+                        if(isLoadmoring){
+                            allProjects.addAll(projects);
+                            adapter.notifyItemRangeChanged(allProjects.size()-projects.size(),projects.size());
+                            mBinding.refreshLayout.finishLoadMore(1500);
+                            mBinding.holderView.showRealContentView();
+                        }else {
+                            allProjects.clear();
+                            allProjects.addAll(projects);
+                            adapter.notifyItemRangeChanged(0,allProjects.size());
+                            mBinding.refreshLayout.finishRefresh(1500);
+                            mBinding.holderView.showRealContentView();
+                        }
+                    } else {
                         adapter.notifyDataSetChanged();
                         mBinding.holderView.showEmptyView();
+                        if(isLoadmoring){
+                            mBinding.refreshLayout.finishLoadMore(1500);
+                        }else {
+                            mBinding.refreshLayout.finishRefresh(1500);
+                        }
                     }
-                }else {
+                } else {
                     mBinding.holderView.showFailView();
+                    if(isLoadmoring){
+                        mBinding.refreshLayout.finishLoadMore(false);
+                    }else {
+                        mBinding.refreshLayout.finishRefresh(false);
+                    }
                 }
             }
         });

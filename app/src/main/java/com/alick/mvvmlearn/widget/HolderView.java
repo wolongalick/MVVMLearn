@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.alick.mvvmlearn.R;
@@ -24,6 +26,7 @@ public class HolderView extends FrameLayout {
     private FailView failView;
     private LoadingView loadingView;
     private View realContentView;
+    private AlphaAnimation fadeAnimation;
 
     public HolderView(@NonNull Context context) {
         this(context, null);
@@ -37,6 +40,7 @@ public class HolderView extends FrameLayout {
         super(context, attrs, defStyleAttr);
         this.context = context;
         init();
+        initAnimation();
     }
 
     private void init() {
@@ -44,8 +48,12 @@ public class HolderView extends FrameLayout {
         loadingView = new LoadingView(context);
         failView = new FailView(context);
         emptyView = new EmptyView(context);
+    }
 
-
+    private void initAnimation() {
+        fadeAnimation = new AlphaAnimation(0, 1);
+        fadeAnimation.setDuration(300);
+        fadeAnimation.setInterpolator(new DecelerateInterpolator());
     }
 
     protected View getRealContentView() {
@@ -88,19 +96,25 @@ public class HolderView extends FrameLayout {
     }
 
     public void showRealContentView() {
+        if(realContentView.getVisibility()!=VISIBLE){
+            initRealContentView();
+        }
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        fillLayout();
+        initRealContentView();
+    }
+
+    private void initRealContentView(){
         loadingView.setVisibility(GONE);
         failView.setVisibility(GONE);
         emptyView.setVisibility(GONE);
         realContentView.setVisibility(VISIBLE);
     }
 
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        fillLayout();
-        showRealContentView();
-    }
 
     public void setOnReloadListener(final OnReloadListener onReloadListener){
         failView.setOnReloadListener(new OnReloadListener() {

@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         mBinding.btnGoProjectList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //将用户名传给项目列表页面
                 startActivity(new Intent(MainActivity.this,ProjectListActivity.class).putExtra(IntentKey.USERNAME,mBinding.getUser().getLogin()));
             }
         });
