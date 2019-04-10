@@ -16,16 +16,16 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * @author 崔兴旺
  * @package com.alick.mvvmlearn.utils
  * @title:
- * @description: TODO
+ * @description: 用于处理下拉刷新和加载更多数据的工具类
  * @date 2019/4/10 15:53
  */
 public class RefreshLoadMoreUtils {
     public static <Data> void updateData(HolderView holderView, WySmartRefreshLayout smartRefreshLayout, MultiTypeAdapter multiTypeAdapter, List<Data> allData, List<Data> newData, boolean isSuccess) {
         //1.如果是下拉刷新结束
         if (smartRefreshLayout.getState() == RefreshState.Refreshing || smartRefreshLayout.getState() == RefreshState.None) {
-            //1.1.如果刷新成功
+            //1.1.如果下拉刷新成功
             if (isSuccess) {
-                smartRefreshLayout.finishRefresh();//记录刷新成功
+                smartRefreshLayout.finishRefresh();//【记录刷新成功】
                 //1.1.1.请求数据不为空时,清空全部旧数据并添加新数据,最后刷新列表
                 if (newData != null && !newData.isEmpty()) {
                     if (allData == null) {
@@ -49,7 +49,7 @@ public class RefreshLoadMoreUtils {
                 }
             } else {
                 //1.2.如果刷新失败,判断当前页面是否有数据
-                smartRefreshLayout.finishRefresh(false);//记录刷新失败
+                smartRefreshLayout.finishRefresh(false);//【记录刷新失败】
                 if (allData != null && !allData.isEmpty()) {
                     //1.2.1.如果有数据,则只弹出刷新失败的toast
                     Toast.makeText(holderView.getContext(), "刷新失败", Toast.LENGTH_SHORT).show();
@@ -65,13 +65,13 @@ public class RefreshLoadMoreUtils {
                 allData.addAll(newData);
                 multiTypeAdapter.notifyItemRangeChanged(allData.size() - newData.size(), newData.size());
                 if (isNoMoreData(Constant.DEFAULT_PAGE_SIZE, newData)) {
-                    smartRefreshLayout.finishLoadMoreWithNoMoreData();//记录加载更多成功(且没有更多数据)
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();//【记录加载更多成功(且没有更多数据)】
                 } else {
-                    smartRefreshLayout.finishLoadMore();//记录加载更多成功
+                    smartRefreshLayout.finishLoadMore();//【记录加载更多成功】
                 }
             } else {
                 //2.2.如果加载更多失败
-                smartRefreshLayout.finishLoadMore(false);//记录加载更多失败
+                smartRefreshLayout.finishLoadMore(false);//【记录加载更多失败】
             }
         }
     }

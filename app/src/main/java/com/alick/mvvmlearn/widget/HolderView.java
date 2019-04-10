@@ -43,7 +43,7 @@ public class HolderView extends FrameLayout {
         initAnimation();
     }
 
-    private void init() {
+    protected void init() {
         this.setId(R.id.holderView);
         loadingView = new LoadingView(context);
         failView = new FailView(context);
@@ -61,7 +61,7 @@ public class HolderView extends FrameLayout {
         return getChildAt(0);
     }
 
-    private void fillLayout(){
+    protected void fillLayout(){
         realContentView = getRealContentView();
         try {
             addView(realContentView);

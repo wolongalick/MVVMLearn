@@ -11,27 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.alick.mvvmlearn.widget.HolderView
+        <com.alick.mvvmlearn.widget.ListHolerView
             android:id="@+id/holderView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.alick.mvvmlearn.widget.WySmartRefreshLayout
-                android:id="@+id/refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
-                <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.alick.mvvmlearn.widget.WySmartRefreshLayout>
-
-
-        </com.alick.mvvmlearn.widget.HolderView>
+        </com.alick.mvvmlearn.widget.ListHolerView>
 
 
     </LinearLayout>

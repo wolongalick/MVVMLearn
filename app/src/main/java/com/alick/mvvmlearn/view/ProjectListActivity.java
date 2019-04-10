@@ -102,37 +102,6 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
             @Override
             public void onChanged(@Nullable List<Project> projects) {
                 RefreshLoadMoreUtils.updateData(mBinding.holderView,mBinding.refreshLayout,adapter,allProjects,projects,projects!=null);
-                /*if (projects != null) {
-                    if (!projects.isEmpty()) {
-                        if (mBinding.refreshLayout.getState() == RefreshState.Loading) {
-                            allProjects.addAll(projects);
-                            adapter.notifyItemRangeChanged(allProjects.size() - projects.size(), projects.size());
-                            mBinding.refreshLayout.finishLoadMore();//此时状态:Loading
-                            mBinding.holderView.showRealContentView();
-                        } else {
-                            allProjects.clear();
-                            allProjects.addAll(projects);
-                            adapter.notifyItemRangeChanged(0, allProjects.size());
-                            mBinding.refreshLayout.finishRefresh();//此时状态:Refreshing
-                            mBinding.holderView.showRealContentView();
-                        }
-                    } else {
-                        adapter.notifyDataSetChanged();
-                        mBinding.holderView.showEmptyView();
-                        if (mBinding.refreshLayout.getState() == RefreshState.Loading) {
-                            mBinding.refreshLayout.finishLoadMore();
-                        } else {
-                            mBinding.refreshLayout.finishRefresh();
-                        }
-                    }
-                } else {
-                    mBinding.holderView.showFailView();
-                    if (mBinding.refreshLayout.getState() == RefreshState.Loading) {
-                        mBinding.refreshLayout.finishLoadMore(false);
-                    } else {
-                        mBinding.refreshLayout.finishRefresh(false);
-                    }
-                }*/
             }
         });
     }
