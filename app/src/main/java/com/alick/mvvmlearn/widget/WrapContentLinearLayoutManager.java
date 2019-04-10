@@ -4,7 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-
+/**
+ * 功能: 防止recycleview更新数据时(由Google自身原因)崩溃
+ * 作者: 崔兴旺
+ * 日期: 2019/4/10
+ */
 public class WrapContentLinearLayoutManager extends LinearLayoutManager {
     public WrapContentLinearLayoutManager(Context context) {
         super(context);

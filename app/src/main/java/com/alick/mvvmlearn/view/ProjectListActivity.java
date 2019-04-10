@@ -38,6 +38,8 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
     private List<Project> allProjects;
     private MultiTypeAdapter adapter;
     private MutableLiveData<List<Project>> listMutableLiveData;
+    private boolean isLoadmoring;
+
 
     /**
      * 获取布局ID
@@ -65,7 +67,6 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
         mBinding.recyclerView.setAdapter(adapter);
     }
 
-    private boolean isLoadmoring;
 
 
     /**
