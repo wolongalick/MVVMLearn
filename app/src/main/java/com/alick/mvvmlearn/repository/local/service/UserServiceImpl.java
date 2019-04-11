@@ -3,6 +3,7 @@ package com.alick.mvvmlearn.repository.local.service;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.local.dao.UserDao;
 import com.alick.mvvmlearn.repository.local.db.DBHelper;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LiveData<User> queryByUsername(String username) {
+    public LiveData<BaseResponse<User>> queryByUsername(String username) {
         return userDao.queryByUsername(username);
     }
 }

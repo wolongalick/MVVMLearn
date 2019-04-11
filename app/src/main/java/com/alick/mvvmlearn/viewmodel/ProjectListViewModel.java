@@ -3,6 +3,7 @@ package com.alick.mvvmlearn.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.Project;
 import com.alick.commonlibrary.utils.OkHttpUtils;
 
@@ -17,27 +18,23 @@ import java.util.List;
  */
 public class ProjectListViewModel extends ViewModel {
 
-    private MutableLiveData<List<Project>> listMutableLiveData;
+    private MutableLiveData<BaseResponse<List<Project>>> listMutableLiveData;
 
-    public MutableLiveData<List<Project>> getProjectsLiveData(String username, int pageNum, int pageSize) {
+    public MutableLiveData<BaseResponse<List<Project>>> getProjectsLiveData(String username, int pageNum, int pageSize) {
         if(listMutableLiveData==null){
             listMutableLiveData = new MutableLiveData<>();
         }
 
         OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/" + username + "/repos", null, new OkHttpUtils.OkCallback<List<Project>>() {
             @Override
-            public void onSuccess(List<Project> projects) {
-                if(projects!=null){
-                    listMutableLiveData.postValue(projects);
-                }else {
-                    listMutableLiveData.postValue(null);
-                }
+            public void onSuccess(BaseResponse<List<Project>> baseResponse) {
+                listMutableLiveData.postValue(baseResponse);
             }
 
             @Override
             public void onFail(Throwable throwable) {
                 throwable.printStackTrace();
-                listMutableLiveData.postValue(null);
+                listMutableLiveData.postValue(new BaseResponse<List<Project>>(throwable.getMessage()));
             }
         });
         return listMutableLiveData;

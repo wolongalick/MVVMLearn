@@ -3,6 +3,7 @@ package com.alick.mvvmlearn.repository;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.local.LocalUserDataSource;
 import com.alick.mvvmlearn.repository.remote.RemoteUserDataSource;
@@ -32,7 +33,7 @@ public class UserRepository {
         return instance;
     }
 
-    public LiveData<User> getUser(String username) {
+    public LiveData<BaseResponse<User>> getUser(String username) {
         if (NetworkUtils.isConnected(context)) {
             return RemoteUserDataSource.getInstance().queryUserByUsername(username);
         } else {

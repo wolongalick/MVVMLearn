@@ -1,6 +1,7 @@
 package com.alick.commonlibrary.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alick.commonlibrary.base.bean.BaseResponse;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
@@ -60,7 +61,7 @@ public class OkHttpUtils {
 
 
     public interface OkCallback<Data> {
-        void onSuccess(Data data);
+        void onSuccess(BaseResponse<Data> baseResponse);
 
         void onFail(Throwable throwable);
     }
@@ -106,12 +107,14 @@ public class OkHttpUtils {
                     Type[] types = ((ParameterizedType) okCallback.getClass().getGenericInterfaces()[0]).getActualTypeArguments();
                     Type type = types[0];
                     if(type.toString().contains("java.util.List")){
-                        Class aClass= (Class) ((ParameterizedType) type).getActualTypeArguments()[0];
+                        Class aClass= (Class) ((ParameterizedType)((ParameterizedType) type).getActualTypeArguments()[0]).getActualTypeArguments()[0];
                         Data data= (Data) JSON.parseArray(string, aClass);
-                        okCallback.onSuccess(data);
+                        BaseResponse<Data> baseResponse=new BaseResponse<>(data);
+                        okCallback.onSuccess(baseResponse);
                     }else {
                         Data data = JsonUtils.parseJson2Bean(string, type);
-                        okCallback.onSuccess(data);
+                        BaseResponse<Data> baseResponse=new BaseResponse<>(data);
+                        okCallback.onSuccess(baseResponse);
                     }
 
                 } catch (IOException e) {

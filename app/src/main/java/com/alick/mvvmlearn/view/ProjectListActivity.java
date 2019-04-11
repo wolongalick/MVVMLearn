@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.R;
 import com.alick.mvvmlearn.adapter.ProjectAdapter;
 import com.alick.commonlibrary.base.activity.BaseListActivity;
@@ -62,10 +64,16 @@ public class ProjectListActivity extends BaseListActivity<ActivityProjectListBin
     public void initData() {
         projectListViewModel = ViewModelProviders.of(this).get(ProjectListViewModel.class);
         listHolerView.showLoadingView();
-        projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, CommonConstant.DEFAULT_PAGE_SIZE).observe(this, new Observer<List<Project>>() {
+        projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, CommonConstant.DEFAULT_PAGE_SIZE).observe(this, new Observer<BaseResponse<List<Project>>>() {
             @Override
-            public void onChanged(@Nullable List<Project> projects) {
-                updateData(projects, projects != null);
+            public void onChanged(@Nullable BaseResponse<List<Project>> baseResponse) {
+                List<Project> projects = baseResponse.getData();
+                if(projects!=null){
+                    updateData(projects, true);
+                }else {
+                    updateData(null,false);
+                    Toast.makeText(getApplicationContext(),baseResponse.getErrorMsg(),Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

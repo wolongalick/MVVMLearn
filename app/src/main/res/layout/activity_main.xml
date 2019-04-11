@@ -6,8 +6,6 @@
 
         <import type="android.view.View" />
 
-        <import type="com.alick.mvvmlearn.model.User" />
-
         <variable
             name="user"
             type="com.alick.mvvmlearn.model.User" />

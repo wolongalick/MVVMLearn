@@ -6,20 +6,21 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.UserRepository;
 
 public class UserViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
-    private LiveData<User> ldUser;
+    private LiveData<BaseResponse<User>> ldUser;
     private MutableLiveData<String> ldUsername;
 
-    public LiveData<User> getUser() {
+    public LiveData<BaseResponse<User>> getUser() {
         if (null == ldUser) {
             ldUsername = new MutableLiveData<>();
-            ldUser = Transformations.switchMap(ldUsername, new Function<String, LiveData<User>>() {
+            ldUser = Transformations.switchMap(ldUsername, new Function<String, LiveData<BaseResponse<User>>>() {
                 @Override
-                public LiveData<User> apply(String username) {
+                public LiveData<BaseResponse<User>> apply(String username) {
                     return userRepository.getUser(username);
                 }
             });

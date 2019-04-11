@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.R;
 import com.alick.commonlibrary.base.activity.BaseActivity;
 import com.alick.mvvmlearn.constant.IntentKey;
@@ -16,8 +17,6 @@ import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.viewmodel.UserViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
-
-
     private UserViewModel userViewModel;
 
     @Override
@@ -75,9 +74,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     @Override
     public void initData() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getUser().observe(this, new Observer<User>() {
+        userViewModel.getUser().observe(this, new Observer<BaseResponse<User>>() {
             @Override
-            public void onChanged(@Nullable User user) {
+            public void onChanged(@Nullable BaseResponse<User> baseResponse) {
+                User user=baseResponse.getData();
                 if (user != null) {
                     mBinding.setUser(user);
                     mBinding.holderView.showRealContentView();

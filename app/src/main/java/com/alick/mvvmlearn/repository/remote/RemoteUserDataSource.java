@@ -3,6 +3,7 @@ package com.alick.mvvmlearn.repository.remote;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.LocalUserDataSource;
@@ -38,10 +39,9 @@ public class RemoteUserDataSource implements UserDataSource {
     }
 
     @Override
-    public LiveData<User> queryUserByUsername(String username) {
+    public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
         BLog.i("从网络获取数据");
-        final MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
-
+        final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
 
         Map<String,Object> params=new HashMap<>();
         params.put("nickname","小鸡子");
@@ -49,18 +49,19 @@ public class RemoteUserDataSource implements UserDataSource {
 
         OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<User>() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(BaseResponse<User> baseResponse){
+                User user = baseResponse.getData();
                 if (user != null) {
-                    userMutableLiveData.postValue(user);
                     //更新数据库缓存
                     LocalUserDataSource.getInstance().addUser(user);
                 }
+                userMutableLiveData.postValue(baseResponse);
             }
 
             @Override
             public void onFail(Throwable throwable) {
-                userMutableLiveData.postValue(null);
                 throwable.printStackTrace();
+                userMutableLiveData.postValue(new BaseResponse<User>(throwable.getMessage()));
             }
         });
 
