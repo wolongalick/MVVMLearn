@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(':androidLibrary')
+    api project(':refresh-footer')
+    api project(':refresh-header')
+    api project(':refresh-layout')
+
+    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.alibaba:fastjson:1.2.56'
+    api 'me.drakeet.multitype:multitype:3.4.4'//注意不要升级此版本,否则会引入androidx包
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+}

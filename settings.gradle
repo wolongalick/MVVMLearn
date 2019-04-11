@@ -1,1 +1,1 @@
-include ':app', ':androidLibrary', ':refresh-layout', ':refresh-header', ':refresh-footer'
+include ':app', ':androidLibrary', ':refresh-layout', ':refresh-header', ':refresh-footer', ':commonlibrary'

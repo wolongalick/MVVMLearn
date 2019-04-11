@@ -6,7 +6,7 @@ import android.content.Context;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.local.LocalUserDataSource;
 import com.alick.mvvmlearn.repository.remote.RemoteUserDataSource;
-import com.alick.mvvmlearn.utils.NetworkUtils;
+import com.alick.commonlibrary.utils.NetworkUtils;
 
 public class UserRepository {
 

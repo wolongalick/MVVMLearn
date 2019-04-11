@@ -6,7 +6,7 @@ import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.service.UserService;
 import com.alick.mvvmlearn.repository.local.service.UserServiceImpl;
-import com.alick.mvvmlearn.utils.BLog;
+import com.alick.commonlibrary.utils.BLog;
 
 public class LocalUserDataSource implements UserDataSource {
 

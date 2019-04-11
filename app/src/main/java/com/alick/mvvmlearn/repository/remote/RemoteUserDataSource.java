@@ -6,8 +6,8 @@ import android.arch.lifecycle.MutableLiveData;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.LocalUserDataSource;
-import com.alick.mvvmlearn.utils.BLog;
-import com.alick.mvvmlearn.utils.OkHttpUtils;
+import com.alick.commonlibrary.utils.BLog;
+import com.alick.commonlibrary.utils.OkHttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;

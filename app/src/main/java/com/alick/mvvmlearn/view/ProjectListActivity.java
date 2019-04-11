@@ -1,27 +1,21 @@
 package com.alick.mvvmlearn.view;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alick.mvvmlearn.R;
-import com.alick.mvvmlearn.base.BaseActivity;
-import com.alick.mvvmlearn.constant.Constant;
+import com.alick.mvvmlearn.adapter.ProjectAdapter;
+import com.alick.commonlibrary.base.activity.BaseListActivity;
+import com.alick.commonlibrary.constatnt.CommonConstant;
 import com.alick.mvvmlearn.constant.IntentKey;
 import com.alick.mvvmlearn.databinding.ActivityProjectListBinding;
 import com.alick.mvvmlearn.model.Project;
-import com.alick.mvvmlearn.utils.RefreshLoadMoreUtils;
-import com.alick.mvvmlearn.viewbinder.ProjectViewBinder;
 import com.alick.mvvmlearn.viewmodel.ProjectListViewModel;
-import com.alick.mvvmlearn.widget.OnReloadListener;
-import com.alick.mvvmlearn.widget.WySmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * @author 崔兴旺
@@ -30,13 +24,9 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * @description: TODO
  * @date 2019/4/9 11:57
  */
-public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding> {
+public class ProjectListActivity extends BaseListActivity<ActivityProjectListBinding, ProjectAdapter> {
     private ProjectListViewModel projectListViewModel;
     private String username;
-    private ProjectViewBinder projectViewBinder;
-    private List<Project> allProjects;
-    private MultiTypeAdapter adapter;
-    private MutableLiveData<List<Project>> listMutableLiveData;
 
     /**
      * 获取布局ID
@@ -53,14 +43,8 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
      */
     @Override
     public void initViews() {
+        super.initViews();
         username = getIntent().getStringExtra(IntentKey.USERNAME);
-        allProjects = new ArrayList<>();
-        projectViewBinder = new ProjectViewBinder();
-
-        adapter = new MultiTypeAdapter();
-        adapter.register(Project.class, projectViewBinder);
-        adapter.setItems(allProjects);
-        mBinding.holderView.getSmartRecyclerView().getRecyclerView().setAdapter(adapter);
     }
 
     /**
@@ -68,24 +52,7 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
      */
     @Override
     public void initListener() {
-        mBinding.holderView.setOnReloadListener(new OnReloadListener() {
-            @Override
-            public void onReload() {
-                projectListViewModel.getListMutableLiveData(username, Constant.DEFAULT_FIRST_PAGE_NUM, Constant.DEFAULT_PAGE_SIZE);
-            }
-        });
 
-        mBinding.holderView.getSmartRecyclerView().setOnWyRefreshListener(new WySmartRefreshLayout.OnWyRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout, int pageSize) {
-                projectListViewModel.getListMutableLiveData(username, Constant.DEFAULT_FIRST_PAGE_NUM, pageSize);
-            }
-        }).setOnWyLoadMoreListener(new WySmartRefreshLayout.OnWyLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout, int pageNum, int pageSize) {
-                projectListViewModel.getListMutableLiveData(username, pageNum, pageSize);
-            }
-        });
     }
 
     /**
@@ -93,15 +60,46 @@ public class ProjectListActivity extends BaseActivity<ActivityProjectListBinding
      */
     @Override
     public void initData() {
-        projectListViewModel = new ProjectListViewModel();
-        mBinding.holderView.showLoadingView();
-        listMutableLiveData = projectListViewModel.getListMutableLiveData(username, Constant.DEFAULT_FIRST_PAGE_NUM, Constant.DEFAULT_PAGE_SIZE);
-        listMutableLiveData.observe(this, new Observer<List<Project>>() {
+        projectListViewModel = ViewModelProviders.of(this).get(ProjectListViewModel.class);
+        listHolerView.showLoadingView();
+        projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, CommonConstant.DEFAULT_PAGE_SIZE).observe(this, new Observer<List<Project>>() {
             @Override
             public void onChanged(@Nullable List<Project> projects) {
-                RefreshLoadMoreUtils.updateData(mBinding.holderView,mBinding.holderView.getSmartRecyclerView().getWySmartRefreshLayout(),adapter,allProjects,projects,projects!=null);
+                updateData(projects, projects != null);
             }
         });
+    }
+
+
+    /**
+     * 下拉刷新的回调函数
+     *
+     * @param refreshLayout
+     * @param pageSize
+     */
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout, int pageSize) {
+        projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, pageSize);
+    }
+
+    /**
+     * 加载更多的回调函数
+     *
+     * @param refreshLayout
+     * @param pageNum
+     * @param pageSize
+     */
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout, int pageNum, int pageSize) {
+        projectListViewModel.getProjectsLiveData(username, pageNum, pageSize);
+    }
+
+    /**
+     * 页面加载失败后,点击页面重试的回调函数
+     */
+    @Override
+    public void onReload() {
+        projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, CommonConstant.DEFAULT_PAGE_SIZE);
     }
 
 

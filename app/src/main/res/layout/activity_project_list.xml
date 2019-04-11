@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.alick.mvvmlearn.widget.ListHolerView
+        <com.alick.commonlibrary.holder_view.ListHolerView
             android:id="@+id/holderView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

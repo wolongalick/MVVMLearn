@@ -9,12 +9,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alick.mvvmlearn.R;
-import com.alick.mvvmlearn.base.BaseActivity;
+import com.alick.commonlibrary.base.activity.BaseActivity;
 import com.alick.mvvmlearn.constant.IntentKey;
 import com.alick.mvvmlearn.databinding.ActivityMainBinding;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.viewmodel.UserViewModel;
-import com.alick.mvvmlearn.widget.OnReloadListener;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
@@ -44,6 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
      */
     @Override
     public void initViews() {
+        super.initViews();
 
     }
 
@@ -57,13 +57,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             public void onClick(View v) {
                 searchUser();
                 mBinding.holderView.showLoadingView();
-            }
-        });
-
-        mBinding.holderView.setOnReloadListener(new OnReloadListener() {
-            @Override
-            public void onReload() {
-                searchUser();
             }
         });
 
@@ -93,5 +86,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 }
             }
         });
+    }
+
+    @Override
+    public void onReload() {
+        searchUser();
     }
 }

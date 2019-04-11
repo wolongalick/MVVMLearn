@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.alick.mvvmlearn.model.Project;
-import com.alick.mvvmlearn.utils.OkHttpUtils;
+import com.alick.commonlibrary.utils.OkHttpUtils;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ProjectListViewModel extends ViewModel {
 
     private MutableLiveData<List<Project>> listMutableLiveData;
 
-    public MutableLiveData<List<Project>> getListMutableLiveData(String username,int pageNum,int pageSize) {
+    public MutableLiveData<List<Project>> getProjectsLiveData(String username, int pageNum, int pageSize) {
         if(listMutableLiveData==null){
             listMutableLiveData = new MutableLiveData<>();
         }

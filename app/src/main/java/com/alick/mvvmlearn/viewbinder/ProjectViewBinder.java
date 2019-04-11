@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alick.mvvmlearn.R;
+import com.alick.commonlibrary.base.viewbinder.BaseViewBinder;
 import com.alick.mvvmlearn.databinding.ItemProjectBinding;
 import com.alick.mvvmlearn.model.Project;
 
-import me.drakeet.multitype.ItemViewBinder;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author 崔兴旺
@@ -20,11 +21,11 @@ import me.drakeet.multitype.ItemViewBinder;
  * @description: TODO
  * @date 2019/4/9 16:10
  */
-public class ProjectViewBinder extends ItemViewBinder<Project, ProjectViewBinder.ProjectViewHolder> {
+public class ProjectViewBinder extends BaseViewBinder<Project, ProjectViewBinder.ProjectViewHolder> {
+    @NotNull
     @Override
     protected ProjectViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         ItemProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_project, parent, false);
-
         return new ProjectViewHolder(binding.getRoot());
     }
 
@@ -34,9 +35,8 @@ public class ProjectViewBinder extends ItemViewBinder<Project, ProjectViewBinder
         binding.setProject(project);
     }
 
-    public static class ProjectViewHolder extends RecyclerView.ViewHolder {
-
-        public ProjectViewHolder(@NonNull View itemView) {
+    static class ProjectViewHolder extends RecyclerView.ViewHolder {
+        ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
