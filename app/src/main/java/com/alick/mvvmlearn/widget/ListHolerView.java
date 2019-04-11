@@ -28,11 +28,11 @@ public class ListHolerView extends HolderView {
     public ListHolerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context=context;
+        smartRecyclerView =new SmartRecyclerView(context,attrs,defStyleAttr);
     }
 
     protected void init(){
         super.init();
-        smartRecyclerView =new SmartRecyclerView(context);
     }
 
     @Override

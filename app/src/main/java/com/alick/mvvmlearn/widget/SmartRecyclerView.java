@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 
 import com.alick.mvvmlearn.R;
 import com.alick.mvvmlearn.databinding.LayoutSmartRecyclerViewBinding;
@@ -16,9 +17,10 @@ import com.alick.mvvmlearn.databinding.LayoutSmartRecyclerViewBinding;
  * @description:
  * @date 2019/4/10 18:51
  */
-public class SmartRecyclerView extends WySmartRefreshLayout{
+public class SmartRecyclerView extends FrameLayout implements IWySmartRefreshLayout{
     private Context context;
     private RecyclerView recyclerView;
+    private WySmartRefreshLayout wySmartRefreshLayout;
 
     private LayoutSmartRecyclerViewBinding mbinding;
 
@@ -37,12 +39,27 @@ public class SmartRecyclerView extends WySmartRefreshLayout{
     }
 
     private void init(){
-        mbinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_smart_recycler_view, null, false);
+        mbinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_smart_recycler_view, this,true);
         recyclerView=mbinding.recyclerView;
+        wySmartRefreshLayout=mbinding.refreshLayout;
         recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(context));
+    }
+
+    @Override
+    public WySmartRefreshLayout setOnWyRefreshListener(WySmartRefreshLayout.OnWyRefreshListener onWyRefreshListener) {
+        return mbinding.refreshLayout.setOnWyRefreshListener(onWyRefreshListener);
+    }
+
+    @Override
+    public WySmartRefreshLayout setOnWyLoadMoreListener(WySmartRefreshLayout.OnWyLoadMoreListener onWyLoadMoreListener) {
+        return mbinding.refreshLayout.setOnWyLoadMoreListener(onWyLoadMoreListener);
     }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    public WySmartRefreshLayout getWySmartRefreshLayout() {
+        return wySmartRefreshLayout;
     }
 }

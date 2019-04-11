@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
  * @description:
  * @date 2019/4/10 15:55
  */
-public class WySmartRefreshLayout extends SmartRefreshLayout {
+public class WySmartRefreshLayout extends SmartRefreshLayout implements IWySmartRefreshLayout{
 
 
     private int firstNum = Constant.DEFAULT_FIRST_PAGE_NUM;
@@ -62,6 +62,12 @@ public class WySmartRefreshLayout extends SmartRefreshLayout {
         return super.finishLoadMore(delayed, success, noMoreData);
     }
 
+    /**
+     * 设置下拉刷新监听
+     * @param onWyRefreshListener
+     * @return
+     */
+    @Override
     public WySmartRefreshLayout setOnWyRefreshListener(final OnWyRefreshListener onWyRefreshListener) {
         super.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -74,7 +80,12 @@ public class WySmartRefreshLayout extends SmartRefreshLayout {
         return this;
     }
 
-
+    /**
+     * 设置加载更多监听
+     * @param onWyLoadMoreListener
+     * @return
+     */
+    @Override
     public WySmartRefreshLayout setOnWyLoadMoreListener(final OnWyLoadMoreListener onWyLoadMoreListener) {
         super.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
