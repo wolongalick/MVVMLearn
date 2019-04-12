@@ -21,7 +21,7 @@ import java.util.Map;
  * @date 2019/4/8 15:30
  */
 public class RemoteUserDataSource implements UserDataSource {
-
+    private final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
     private static RemoteUserDataSource instance = null;
 
     private RemoteUserDataSource() {
@@ -41,7 +41,7 @@ public class RemoteUserDataSource implements UserDataSource {
     @Override
     public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
         BLog.i("从网络获取数据");
-        final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
+
 
         Map<String,Object> params=new HashMap<>();
         params.put("nickname","小鸡子");

@@ -41,7 +41,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LiveData<BaseResponse<User>> queryByUsername(String username) {
-        return userDao.queryByUsername(username);
+    public LiveData<BaseResponse<User>> queryByUsername(final String username) {
+        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
+        new Thread() {
+            @Override
+            public void run() {
+                User user = userDao.queryByUsername(username);
+                data.postValue(new BaseResponse<>(user));
+            }
+        }.start();
+        return data;
     }
 }

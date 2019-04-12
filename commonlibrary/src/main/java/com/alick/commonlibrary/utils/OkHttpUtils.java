@@ -107,7 +107,7 @@ public class OkHttpUtils {
                     Type[] types = ((ParameterizedType) okCallback.getClass().getGenericInterfaces()[0]).getActualTypeArguments();
                     Type type = types[0];
                     if(type.toString().contains("java.util.List")){
-                        Class aClass= (Class) ((ParameterizedType)((ParameterizedType) type).getActualTypeArguments()[0]).getActualTypeArguments()[0];
+                        Class aClass= (Class)((ParameterizedType) type).getActualTypeArguments()[0];
                         Data data= (Data) JSON.parseArray(string, aClass);
                         BaseResponse<Data> baseResponse=new BaseResponse<>(data);
                         okCallback.onSuccess(baseResponse);

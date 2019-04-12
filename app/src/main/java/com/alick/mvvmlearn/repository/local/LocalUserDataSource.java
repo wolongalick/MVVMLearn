@@ -3,15 +3,17 @@ package com.alick.mvvmlearn.repository.local;
 import android.arch.lifecycle.LiveData;
 
 import com.alick.commonlibrary.base.bean.BaseResponse;
+import com.alick.commonlibrary.utils.BLog;
 import com.alick.mvvmlearn.model.User;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.service.UserService;
 import com.alick.mvvmlearn.repository.local.service.UserServiceImpl;
-import com.alick.commonlibrary.utils.BLog;
 
 public class LocalUserDataSource implements UserDataSource {
 
     private static LocalUserDataSource instance = null;
+
+    private UserService userService = UserServiceImpl.getInstance();
 
     private LocalUserDataSource() {
     }
@@ -28,7 +30,6 @@ public class LocalUserDataSource implements UserDataSource {
     }
 
 
-    private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
@@ -36,7 +37,7 @@ public class LocalUserDataSource implements UserDataSource {
         return userService.queryByUsername(username);
     }
 
-    public LiveData<Long> addUser(User user) {
-        return userService.add(user);
+    public void addUser(User user) {
+        userService.add(user);
     }
 }
