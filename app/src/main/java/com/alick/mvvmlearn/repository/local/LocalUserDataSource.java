@@ -30,7 +30,6 @@ public class LocalUserDataSource implements UserDataSource {
     }
 
 
-
     @Override
     public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
         BLog.i("从本地获取数据");

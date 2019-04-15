@@ -21,7 +21,6 @@ import java.util.Map;
  * @date 2019/4/8 15:30
  */
 public class RemoteUserDataSource implements UserDataSource {
-    private final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
     private static RemoteUserDataSource instance = null;
 
     private RemoteUserDataSource() {
@@ -46,7 +45,7 @@ public class RemoteUserDataSource implements UserDataSource {
         Map<String,Object> params=new HashMap<>();
         params.put("nickname","小鸡子");
         params.put("age","28");
-
+        final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
         OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<User>() {
             @Override
             public void onSuccess(BaseResponse<User> baseResponse){
