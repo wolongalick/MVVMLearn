@@ -32,4 +32,11 @@ public class UserViewModel extends ViewModel {
     public void reload(String username) {
         ldUsername.setValue(username);
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        ldUsername=null;
+        ldUser=null;
+    }
 }

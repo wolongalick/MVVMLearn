@@ -105,17 +105,17 @@ public class OkHttpUtils {
                     String string = body.string();
                     Type[] types = ((ParameterizedType) okCallback.getClass().getGenericInterfaces()[0]).getActualTypeArguments();
                     Type type = types[0];
-                    if(type.toString().contains("java.util.List")){
+//                    if(type.toString().contains("java.util.List")){
+                    if(type instanceof Class){
+                        Data data = JsonUtils.parseJson2Bean(string, type);
+                        BaseResponse<Data> baseResponse=new BaseResponse<>(data);
+                        okCallback.onSuccess(baseResponse);
+                    }else {
                         Class aClass= (Class)((ParameterizedType) type).getActualTypeArguments()[0];
                         Data data= (Data) JsonUtils.parseJson2List(string, aClass);
                         BaseResponse<Data> baseResponse=new BaseResponse<>(data);
                         okCallback.onSuccess(baseResponse);
-                    }else {
-                        Data data = JsonUtils.parseJson2Bean(string, type);
-                        BaseResponse<Data> baseResponse=new BaseResponse<>(data);
-                        okCallback.onSuccess(baseResponse);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     okCallback.onFail(new Throwable("解析内容失败"));
