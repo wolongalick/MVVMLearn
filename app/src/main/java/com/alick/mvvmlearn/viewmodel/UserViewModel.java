@@ -18,6 +18,7 @@ public class UserViewModel extends ViewModel {
     public LiveData<BaseResponse<User>> getUser() {
         if (null == ldUser) {
             ldUsername = new MutableLiveData<>();
+            //ldUsername中的value一旦发生变化就会回调apply()方法
             ldUser = Transformations.switchMap(ldUsername, new Function<String, LiveData<BaseResponse<User>>>() {
                 @Override
                 public LiveData<BaseResponse<User>> apply(String username) {

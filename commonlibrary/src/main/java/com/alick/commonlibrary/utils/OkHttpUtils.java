@@ -1,6 +1,5 @@
 package com.alick.commonlibrary.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alick.commonlibrary.base.bean.BaseResponse;
 
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class OkHttpUtils {
                     Type type = types[0];
                     if(type.toString().contains("java.util.List")){
                         Class aClass= (Class)((ParameterizedType) type).getActualTypeArguments()[0];
-                        Data data= (Data) JSON.parseArray(string, aClass);
+                        Data data= (Data) JsonUtils.parseJson2List(string, aClass);
                         BaseResponse<Data> baseResponse=new BaseResponse<>(data);
                         okCallback.onSuccess(baseResponse);
                     }else {

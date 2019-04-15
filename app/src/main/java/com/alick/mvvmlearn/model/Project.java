@@ -156,7 +156,7 @@ public class Project {
     private boolean archived;
     private boolean disabled;
     private int open_issues_count;
-    private String license;
+    private LicenseBean license;
     private int forks;
     private int open_issues;
     private int watchers;
@@ -706,11 +706,11 @@ public class Project {
         this.open_issues_count = open_issues_count;
     }
 
-    public String getLicense() {
+    public LicenseBean getLicense() {
         return license;
     }
 
-    public void setLicense(String license) {
+    public void setLicense(LicenseBean license) {
         this.license = license;
     }
 
@@ -929,6 +929,63 @@ public class Project {
 
         public void setSite_admin(boolean site_admin) {
             this.site_admin = site_admin;
+        }
+    }
+
+    public static class LicenseBean{
+
+        /**
+         * key : apache-2.0
+         * name : Apache License 2.0
+         * spdx_id : Apache-2.0
+         * url : https://api.github.com/licenses/apache-2.0
+         * node_id : MDc6TGljZW5zZTI=
+         */
+
+        private String key;
+        private String name;
+        private String spdx_id;
+        private String url;
+        private String node_id;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSpdx_id() {
+            return spdx_id;
+        }
+
+        public void setSpdx_id(String spdx_id) {
+            this.spdx_id = spdx_id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getNode_id() {
+            return node_id;
+        }
+
+        public void setNode_id(String node_id) {
+            this.node_id = node_id;
         }
     }
 }

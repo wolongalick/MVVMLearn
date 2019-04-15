@@ -34,7 +34,6 @@ dependencies {
     api project(':refresh-layout')
 
     api 'com.google.code.gson:gson:2.8.5'
-    api 'com.alibaba:fastjson:1.2.56'
     api 'me.drakeet.multitype:multitype:3.4.4'//注意不要升级此版本,否则会引入androidx包
     api 'com.squareup.okhttp3:okhttp:3.12.0'
 }
