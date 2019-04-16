@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.commonlibrary.utils.BLog;
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.service.UserService;
 import com.alick.mvvmlearn.repository.local.service.UserServiceImpl;
@@ -31,12 +31,12 @@ public class LocalUserDataSource implements UserDataSource {
 
 
     @Override
-    public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
+    public LiveData<BaseResponse<Account>> queryUserByUsername(String username) {
         BLog.i("从本地获取数据");
         return userService.queryByUsername(username);
     }
 
-    public void addUser(User user) {
-        userService.add(user);
+    public void addUser(Account account) {
+        userService.add(account);
     }
 }

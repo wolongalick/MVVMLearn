@@ -1,18 +1,13 @@
 package com.alick.mvvmlearn.viewbinder;
 
-import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.alick.mvvmlearn.R;
 import com.alick.commonlibrary.base.viewbinder.BaseViewBinder;
+import com.alick.commonlibrary.base.viewholder.BaseViewHolder;
+import com.alick.mvvmlearn.R;
 import com.alick.mvvmlearn.databinding.ItemProjectBinding;
 import com.alick.mvvmlearn.model.Project;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author 崔兴旺
@@ -21,25 +16,30 @@ import org.jetbrains.annotations.NotNull;
  * @description: TODO
  * @date 2019/4/9 16:10
  */
-public class ProjectViewBinder extends BaseViewBinder<Project, ProjectViewBinder.ProjectViewHolder> {
-    @NotNull
+public class ProjectViewBinder extends BaseViewBinder<Project, ProjectViewBinder.ProjectViewHolder,ItemProjectBinding> {
+
+    /**
+     * 获取item布局id
+     * @return
+     */
     @Override
-    protected ProjectViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        ItemProjectBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_project, parent, false);
-        return new ProjectViewHolder(binding.getRoot());
+    protected int getItemLayoutId() {
+        return R.layout.item_project;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ProjectViewHolder holder, @NonNull Project project) {
-        ItemProjectBinding binding = DataBindingUtil.getBinding(holder.itemView);
+    protected void onBaseBindViewHolder(ItemProjectBinding binding,@NonNull ProjectViewHolder holder, @NonNull Project project, int position) {
         binding.setProject(project);
     }
 
-    static class ProjectViewHolder extends RecyclerView.ViewHolder {
-        ProjectViewHolder(@NonNull View itemView) {
+    public static class ProjectViewHolder extends BaseViewHolder {
+        public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
+
+
+
 
 
 }

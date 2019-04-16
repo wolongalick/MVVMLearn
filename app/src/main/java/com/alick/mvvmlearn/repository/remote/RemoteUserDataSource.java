@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.alick.commonlibrary.base.bean.BaseResponse;
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 import com.alick.mvvmlearn.repository.UserDataSource;
 import com.alick.mvvmlearn.repository.local.LocalUserDataSource;
 import com.alick.commonlibrary.utils.BLog;
@@ -38,21 +38,21 @@ public class RemoteUserDataSource implements UserDataSource {
     }
 
     @Override
-    public LiveData<BaseResponse<User>> queryUserByUsername(String username) {
+    public LiveData<BaseResponse<Account>> queryUserByUsername(String username) {
         BLog.i("从网络获取数据");
 
 
         Map<String,Object> params=new HashMap<>();
         params.put("nickname","小鸡子");
         params.put("age","28");
-        final MutableLiveData<BaseResponse<User>> userMutableLiveData = new MutableLiveData<>();
-        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<User>() {
+        final MutableLiveData<BaseResponse<Account>> userMutableLiveData = new MutableLiveData<>();
+        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<Account>() {
             @Override
-            public void onSuccess(BaseResponse<User> baseResponse){
-                User user = baseResponse.getData();
-                if (user != null) {
+            public void onSuccess(BaseResponse<Account> baseResponse){
+                Account account = baseResponse.getData();
+                if (account != null) {
                     //更新数据库缓存
-                    LocalUserDataSource.getInstance().addUser(user);
+                    LocalUserDataSource.getInstance().addUser(account);
                 }
                 userMutableLiveData.postValue(baseResponse);
             }
@@ -60,7 +60,7 @@ public class RemoteUserDataSource implements UserDataSource {
             @Override
             public void onFail(Throwable throwable) {
                 throwable.printStackTrace();
-                userMutableLiveData.postValue(new BaseResponse<User>(throwable.getMessage()));
+                userMutableLiveData.postValue(new BaseResponse<Account>(throwable.getMessage()));
             }
         });
 

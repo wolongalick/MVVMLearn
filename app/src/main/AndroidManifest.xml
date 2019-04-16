@@ -24,6 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ProjectListActivity" />
+        <activity android:name=".view.UserInfoActivity" />
+        <activity android:name=".view.ProjectDetailActivity" />
+
+
     </application>
 
 </manifest>

@@ -7,8 +7,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="user"
-            type="com.alick.mvvmlearn.model.User" />
+            name="account"
+            type="com.alick.mvvmlearn.model.Account" />
 
     </data>
 
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="@{user!=null ? View.VISIBLE : View.GONE}">
+                android:visibility="@{account!=null ? View.VISIBLE : View.GONE}">
 
                 <Button
                     android:id="@+id/btnGoProjectList"
@@ -53,7 +53,7 @@
                     android:id="@+id/tvUserinfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.toString()}" />
+                    android:text="@{account.toString()}" />
             </LinearLayout>
 
         </com.alick.commonlibrary.holder_view.HolderView>

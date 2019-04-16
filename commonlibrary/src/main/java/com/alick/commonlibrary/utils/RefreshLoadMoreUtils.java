@@ -52,7 +52,7 @@ public class RefreshLoadMoreUtils {
                 smartRefreshLayout.finishRefresh(false);//【记录刷新失败】
                 if (allData != null && !allData.isEmpty()) {
                     //1.2.1.如果有数据,则只弹出刷新失败的toast
-//                    Toast.makeText(holderView.getContext(), "刷新失败", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mHolderView.getContext(), "刷新失败", Toast.LENGTH_SHORT).show();
                 } else {
                     //1.2.2.否则显示失败页面
                     holderView.showFailView();

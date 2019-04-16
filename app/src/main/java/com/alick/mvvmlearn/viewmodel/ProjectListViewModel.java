@@ -7,7 +7,9 @@ import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.model.Project;
 import com.alick.commonlibrary.utils.OkHttpUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 崔兴旺
@@ -25,7 +27,11 @@ public class ProjectListViewModel extends ViewModel {
             listMutableLiveData = new MutableLiveData<>();
         }
 
-        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/" + username + "/repos", null, new OkHttpUtils.OkCallback<List<Project>>() {
+        Map<String,Object> paramsMap=new HashMap<>();
+        paramsMap.put("page",pageNum);
+        paramsMap.put("per_page",pageSize);
+
+        OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/" + username + "/repos", paramsMap, new OkHttpUtils.OkCallback<List<Project>>() {
             @Override
             public void onSuccess(BaseResponse<List<Project>> baseResponse) {
                 listMutableLiveData.postValue(baseResponse);

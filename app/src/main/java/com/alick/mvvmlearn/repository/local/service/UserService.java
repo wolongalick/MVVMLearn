@@ -3,10 +3,10 @@ package com.alick.mvvmlearn.repository.local.service;
 import android.arch.lifecycle.LiveData;
 
 import com.alick.commonlibrary.base.bean.BaseResponse;
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 
 public interface UserService {
-    LiveData<Long> add(User user);
+    LiveData<Long> add(Account account);
 
-    LiveData<BaseResponse<User>> queryByUsername(String username);
+    LiveData<BaseResponse<Account>> queryByUsername(String username);
 }

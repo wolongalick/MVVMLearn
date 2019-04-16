@@ -5,14 +5,14 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
 // cache need update
-    Long add(User user);
+    Long add(Account account);
 
-    @Query("select * from user where login = :username")
-    User queryByUsername(String username);
+    @Query("select * from Account where login = :username")
+    Account queryByUsername(String username);
 }

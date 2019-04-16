@@ -8,12 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alick.commonlibrary.base.activity.BaseActivity;
 import com.alick.commonlibrary.base.bean.BaseResponse;
 import com.alick.mvvmlearn.R;
-import com.alick.commonlibrary.base.activity.BaseActivity;
 import com.alick.mvvmlearn.constant.IntentKey;
 import com.alick.mvvmlearn.databinding.ActivityMainBinding;
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 import com.alick.mvvmlearn.viewmodel.UserViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
@@ -36,14 +36,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         userViewModel.reload(username);
     }
 
-
     /**
-     * 初始化视图
+     * 初始化数据
      */
     @Override
-    public void initViews() {
-        super.initViews();
-
+    public void initData() {
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
     /**
@@ -63,29 +61,32 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             @Override
             public void onClick(View v) {
                 //将用户名传给项目列表页面
-                startActivity(new Intent(MainActivity.this,ProjectListActivity.class).putExtra(IntentKey.USERNAME,mBinding.getUser().getLogin()));
+                startActivity(new Intent(MainActivity.this,ProjectListActivity.class).putExtra(IntentKey.USERNAME,mBinding.getAccount().getLogin()));
+            }
+        });
+
+        userViewModel.getUser().observe(this, new Observer<BaseResponse<Account>>() {
+            @Override
+            public void onChanged(@Nullable BaseResponse<Account> baseResponse) {
+                Account account =baseResponse.getData();
+                if (account != null) {
+                    mBinding.setAccount(account);
+                    mBinding.holderView.showRealContentView();
+                }else {
+                    mBinding.holderView.showFailView();
+                    Toast.makeText(getApplicationContext(),baseResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+
     /**
-     * 初始化数据
+     * 初始化视图
      */
     @Override
-    public void initData() {
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getUser().observe(this, new Observer<BaseResponse<User>>() {
-            @Override
-            public void onChanged(@Nullable BaseResponse<User> baseResponse) {
-                User user=baseResponse.getData();
-                if (user != null) {
-                    mBinding.setUser(user);
-                    mBinding.holderView.showRealContentView();
-                }else {
-                    mBinding.holderView.showFailView();
-                }
-            }
-        });
+    public void initViews() {
+
     }
 
     @Override

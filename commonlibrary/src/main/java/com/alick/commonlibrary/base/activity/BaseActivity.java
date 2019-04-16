@@ -22,24 +22,25 @@ import com.alick.commonlibrary.holder_view.OnReloadListener;
 public abstract class BaseActivity<Binding extends ViewDataBinding> extends AppCompatActivity implements IViewHelper, OnReloadListener {
 
     protected Binding mBinding;
-    protected HolderView holderView;
+    protected HolderView mHolderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, getLayoutId());
 
-        initViews();
-        initListener();
+        mHolderView = findViewById(R.id.holderView);
+        if (mHolderView != null) {
+            mHolderView.setOnReloadListener(this);
+        }
+        init();
         initData();
+        initListener();
+        initViews();
     }
 
-    public void initViews() {
-        holderView = findViewById(R.id.holderView);
+    protected void init(){
 
-        if (holderView != null) {
-            holderView.setOnReloadListener(this);
-        }
     }
 
 

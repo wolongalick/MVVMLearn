@@ -17,12 +17,12 @@ import java.util.List;
 
 /**
  * @author 崔兴旺
- * @package com.alick.mvvmlearn.base
+ * @package com.alick.commonlibrary.base.activity
  * @title:
  * @description:
- * @date 2019/4/11 13:32
+ * @date 2019/4/16 11:49
  */
-public abstract class BaseListActivity<Binding extends ViewDataBinding, Adapter extends BaseAdapter> extends BaseActivity<Binding> implements WySmartRefreshLayout.OnWyRefreshListener, WySmartRefreshLayout.OnWyLoadMoreListener {
+public abstract class BaseListFragment<Binding extends ViewDataBinding, Adapter extends BaseAdapter> extends BaseFragment<Binding> implements WySmartRefreshLayout.OnWyRefreshListener, WySmartRefreshLayout.OnWyLoadMoreListener{
     protected ListHolerView mListHolerView;
     protected Adapter mAdapter;
 
@@ -39,7 +39,7 @@ public abstract class BaseListActivity<Binding extends ViewDataBinding, Adapter 
             if (mHolderView instanceof ListHolerView) {
                 mListHolerView = (ListHolerView) mHolderView;
             } else {
-                mListHolerView = findViewById(R.id.holderView);
+                mListHolerView = mBinding.getRoot().findViewById(R.id.holderView);
             }
 
             //将recyclerView与adapter关联
@@ -59,7 +59,7 @@ public abstract class BaseListActivity<Binding extends ViewDataBinding, Adapter 
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
@@ -106,6 +106,6 @@ public abstract class BaseListActivity<Binding extends ViewDataBinding, Adapter 
     protected boolean isDisableLoadMore() {
         return false;
     }
+
+
 }
-
-

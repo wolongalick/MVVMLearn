@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+
+import com.alick.commonlibrary.utils.BLog;
+
 /**
  * 功能: 防止recycleview更新数据时(由Google自身原因)崩溃
  * 作者: 崔兴旺
@@ -27,7 +30,7 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         try {
             super.onLayoutChildren(recycler, state);
         } catch (IndexOutOfBoundsException e) {
-//            BLog.e(e.getMessage());
+            BLog.e(e.getMessage());
         }
     }
 }

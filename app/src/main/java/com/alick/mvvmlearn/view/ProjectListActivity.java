@@ -2,18 +2,21 @@ package com.alick.mvvmlearn.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.alick.commonlibrary.base.activity.BaseListActivity;
 import com.alick.commonlibrary.base.bean.BaseResponse;
+import com.alick.commonlibrary.base.viewbinder.BaseViewBinder;
+import com.alick.commonlibrary.constatnt.CommonConstant;
 import com.alick.mvvmlearn.R;
 import com.alick.mvvmlearn.adapter.ProjectAdapter;
-import com.alick.commonlibrary.base.activity.BaseListActivity;
-import com.alick.commonlibrary.constatnt.CommonConstant;
 import com.alick.mvvmlearn.constant.IntentKey;
 import com.alick.mvvmlearn.databinding.ActivityProjectListBinding;
 import com.alick.mvvmlearn.model.Project;
+import com.alick.mvvmlearn.viewbinder.ProjectViewBinder;
 import com.alick.mvvmlearn.viewmodel.ProjectListViewModel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
@@ -41,12 +44,12 @@ public class ProjectListActivity extends BaseListActivity<ActivityProjectListBin
     }
 
     /**
-     * 初始化视图
+     * 初始化数据
      */
     @Override
-    public void initViews() {
-        super.initViews();
+    public void initData() {
         username = getIntent().getStringExtra(IntentKey.USERNAME);
+        projectListViewModel = ViewModelProviders.of(this).get(ProjectListViewModel.class);
     }
 
     /**
@@ -58,25 +61,32 @@ public class ProjectListActivity extends BaseListActivity<ActivityProjectListBin
     }
 
     /**
-     * 初始化数据
+     * 初始化视图
      */
     @Override
-    public void initData() {
-        projectListViewModel = ViewModelProviders.of(this).get(ProjectListViewModel.class);
-        listHolerView.showLoadingView();
+    public void initViews() {
+        mListHolerView.showLoadingView();
         projectListViewModel.getProjectsLiveData(username, CommonConstant.DEFAULT_FIRST_PAGE_NUM, CommonConstant.DEFAULT_PAGE_SIZE).observe(this, new Observer<BaseResponse<List<Project>>>() {
             @Override
             public void onChanged(@Nullable BaseResponse<List<Project>> baseResponse) {
                 List<Project> projects = baseResponse.getData();
-                if(projects!=null){
+                if (projects != null) {
                     updateData(projects, true);
-                }else {
-                    updateData(null,false);
-                    Toast.makeText(getApplicationContext(),baseResponse.getErrorMsg(),Toast.LENGTH_SHORT).show();
+                } else {
+                    updateData(null, false);
+                    Toast.makeText(getApplicationContext(), baseResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        ProjectViewBinder projectViewBinder = mAdapter.getBinder();
+        projectViewBinder.setOnBinderItemClickListener(new BaseViewBinder.OnBinderItemClickListener<Project, ProjectViewBinder.ProjectViewHolder>() {
+            @Override
+            public void onBinderItemClick(@NonNull ProjectViewBinder.ProjectViewHolder holder, @NonNull Project project, int position) {
+                startActivity(new Intent(getApplicationContext(), ProjectDetailActivity.class).putExtra(IntentKey.PROJECT_DETAIL_URL, project.getUrl()));
+            }
+        });
     }
+
 
 
     /**

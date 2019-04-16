@@ -1,56 +1,36 @@
 package com.alick.mvvmlearn.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
-import java.io.Serializable;
-
 /**
  * @author 崔兴旺
  * @package com.alick.mvvmlearn.model
  * @title:
- * @description: TODO
- * @date 2019/4/8 14:42
+ * @description:
+ * @date 2019/4/16 16:44
  */
-@Entity(tableName = "user")
-public class User implements Serializable {
+public class User {
 
     /**
-     * login : wolongalick
-     * id : 5212514
-     * node_id : MDQ6VXNlcjUyMTI1MTQ=
-     * avatar_url : https://avatars0.githubusercontent.com/u/5212514?v=4
+     * login : jelfzhang
+     * id : 20588732
+     * node_id : MDQ6VXNlcjIwNTg4NzMy
+     * avatar_url : https://avatars2.githubusercontent.com/u/20588732?v=4
      * gravatar_id :
-     * url : https://api.github.com/users/wolongalick
-     * html_url : https://github.com/wolongalick
-     * followers_url : https://api.github.com/users/wolongalick/followers
-     * following_url : https://api.github.com/users/wolongalick/following{/other_user}
-     * gists_url : https://api.github.com/users/wolongalick/gists{/gist_id}
-     * starred_url : https://api.github.com/users/wolongalick/starred{/owner}{/repo}
-     * subscriptions_url : https://api.github.com/users/wolongalick/subscriptions
-     * organizations_url : https://api.github.com/users/wolongalick/orgs
-     * repos_url : https://api.github.com/users/wolongalick/repos
-     * events_url : https://api.github.com/users/wolongalick/events{/privacy}
-     * received_events_url : https://api.github.com/users/wolongalick/received_events
+     * url : https://api.github.com/users/jelfzhang
+     * html_url : https://github.com/jelfzhang
+     * followers_url : https://api.github.com/users/jelfzhang/followers
+     * following_url : https://api.github.com/users/jelfzhang/following{/other_user}
+     * gists_url : https://api.github.com/users/jelfzhang/gists{/gist_id}
+     * starred_url : https://api.github.com/users/jelfzhang/starred{/owner}{/repo}
+     * subscriptions_url : https://api.github.com/users/jelfzhang/subscriptions
+     * organizations_url : https://api.github.com/users/jelfzhang/orgs
+     * repos_url : https://api.github.com/users/jelfzhang/repos
+     * events_url : https://api.github.com/users/jelfzhang/events{/privacy}
+     * received_events_url : https://api.github.com/users/jelfzhang/received_events
      * type : User
      * site_admin : false
-     * name : 崔兴旺
-     * company : null
-     * blog :
-     * location : 北京
-     * email : null
-     * hireable : null
-     * bio : Android狗一枚
-     * public_repos : 79
-     * public_gists : 0
-     * followers : 3
-     * following : 2
-     * created_at : 2013-08-12T09:36:25Z
-     * updated_at : 2019-03-27T10:03:31Z
      */
 
     private String login;
-    @PrimaryKey
     private int id;
     private String node_id;
     private String avatar_url;
@@ -68,19 +48,6 @@ public class User implements Serializable {
     private String received_events_url;
     private String type;
     private boolean site_admin;
-    private String name;
-    private String company;
-    private String blog;
-    private String location;
-    private String email;
-    private boolean hireable;
-    private String bio;
-    private int public_repos;
-    private int public_gists;
-    private int followers;
-    private int following;
-    private String created_at;
-    private String updated_at;
 
     public String getLogin() {
         return login;
@@ -224,146 +191,5 @@ public class User implements Serializable {
 
     public void setSite_admin(boolean site_admin) {
         this.site_admin = site_admin;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getBlog() {
-        return blog;
-    }
-
-    public void setBlog(String blog) {
-        this.blog = blog;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean getHireable() {
-        return hireable;
-    }
-
-    public void setHireable(boolean hireable) {
-        this.hireable = hireable;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public int getPublic_repos() {
-        return public_repos;
-    }
-
-    public void setPublic_repos(int public_repos) {
-        this.public_repos = public_repos;
-    }
-
-    public int getPublic_gists() {
-        return public_gists;
-    }
-
-    public void setPublic_gists(int public_gists) {
-        this.public_gists = public_gists;
-    }
-
-    public int getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(int followers) {
-        this.followers = followers;
-    }
-
-    public int getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(int following) {
-        this.following = following;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", id=" + id +
-                ", node_id='" + node_id + '\'' +
-                ", avatar_url='" + avatar_url + '\'' +
-                ", gravatar_id='" + gravatar_id + '\'' +
-                ", url='" + url + '\'' +
-                ", html_url='" + html_url + '\'' +
-                ", followers_url='" + followers_url + '\'' +
-                ", following_url='" + following_url + '\'' +
-                ", gists_url='" + gists_url + '\'' +
-                ", starred_url='" + starred_url + '\'' +
-                ", subscriptions_url='" + subscriptions_url + '\'' +
-                ", organizations_url='" + organizations_url + '\'' +
-                ", repos_url='" + repos_url + '\'' +
-                ", events_url='" + events_url + '\'' +
-                ", received_events_url='" + received_events_url + '\'' +
-                ", type='" + type + '\'' +
-                ", site_admin=" + site_admin +
-                ", name='" + name + '\'' +
-                ", company='" + company + '\'' +
-                ", blog='" + blog + '\'' +
-                ", location='" + location + '\'' +
-                ", email='" + email + '\'' +
-                ", hireable=" + hireable +
-                ", bio='" + bio + '\'' +
-                ", public_repos=" + public_repos +
-                ", public_gists=" + public_gists +
-                ", followers=" + followers +
-                ", following=" + following +
-                ", created_at='" + created_at + '\'' +
-                ", updated_at='" + updated_at + '\'' +
-                '}';
     }
 }

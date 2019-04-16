@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.alick.commonlibrary.base.bean.BaseResponse;
-import com.alick.mvvmlearn.model.User;
+import com.alick.mvvmlearn.model.Account;
 import com.alick.mvvmlearn.repository.local.dao.UserDao;
 import com.alick.mvvmlearn.repository.local.db.DBHelper;
 
@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao = DBHelper.getInstance().getDb().getUserDao();
 
     @Override
-    public LiveData<Long> add(final User user) {
+    public LiveData<Long> add(final Account account) {
         final MutableLiveData<Long> data = new MutableLiveData<>();
         new Thread() {
             @Override
             public void run() {
-                Long result = userDao.add(user);
+                Long result = userDao.add(account);
                 data.postValue(result);
             }
         }.start();
@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LiveData<BaseResponse<User>> queryByUsername(final String username) {
-        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
+    public LiveData<BaseResponse<Account>> queryByUsername(final String username) {
+        final MutableLiveData<BaseResponse<Account>> data = new MutableLiveData<>();
         new Thread() {
             @Override
             public void run() {
-                User user = userDao.queryByUsername(username);
-                data.postValue(new BaseResponse<>(user));
+                Account account = userDao.queryByUsername(username);
+                data.postValue(new BaseResponse<>(account));
             }
         }.start();
         return data;
