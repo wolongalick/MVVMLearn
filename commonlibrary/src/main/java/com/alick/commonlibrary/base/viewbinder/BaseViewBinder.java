@@ -24,30 +24,14 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public abstract class BaseViewBinder<Data, VH extends RecyclerView.ViewHolder, Binding extends ViewDataBinding> extends ItemViewBinder<Data, VH> {
     private OnBinderItemClickListener<Data, VH> onBinderItemClickListener;
-    private Binding mBinding;
 
     public interface OnBinderItemClickListener<Data, VH extends RecyclerView.ViewHolder> {
         void onBinderItemClick(@NonNull final VH holder, @NonNull final Data item, int position);
     }
 
     @Override
-    protected final void onBindViewHolder(@NonNull final VH holder, @NonNull final Data item) {
-        onBaseBindViewHolder(mBinding, holder, item, holder.getLayoutPosition());
-        if (!isDisableItemClick()) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onBinderItemClickListener != null) {
-                        onBinderItemClickListener.onBinderItemClick(holder, item, holder.getLayoutPosition());
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
     protected final VH onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        mBinding = DataBindingUtil.inflate(inflater, getItemLayoutId(), parent, false);
+        Binding mBinding = DataBindingUtil.inflate(inflater, getItemLayoutId(), parent, false);
         Type type = getClass().getGenericSuperclass();
 
         Type viewHolderType = ((ParameterizedType) type).getActualTypeArguments()[1];
@@ -64,6 +48,22 @@ public abstract class BaseViewBinder<Data, VH extends RecyclerView.ViewHolder, B
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    @Override
+    protected final void onBindViewHolder(@NonNull final VH holder, @NonNull final Data item) {
+        onBaseBindViewHolder((Binding) DataBindingUtil.getBinding(holder.itemView), holder, item, holder.getLayoutPosition());
+        if (!isDisableItemClick()) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onBinderItemClickListener != null) {
+                        onBinderItemClickListener.onBinderItemClick(holder, item, holder.getLayoutPosition());
+                    }
+                }
+            });
+        }
     }
 
     /**

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.alick.mvvmlearn.R;
-import com.alick.mvvmlearn.repository.UserRepository;
 import com.alick.mvvmlearn.repository.local.db.DBHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -49,6 +48,5 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DBHelper.getInstance().init(this);
-        UserRepository.getInstance().init(this);
     }
 }

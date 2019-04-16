@@ -13,7 +13,7 @@ import com.alick.mvvmlearn.model.Project;
  * @author 崔兴旺
  * @package com.alick.mvvmlearn.adapter
  * @title:
- * @description: TODO
+ * @description:
  * @date 2019/4/9 16:10
  */
 public class ProjectViewBinder extends BaseViewBinder<Project, ProjectViewBinder.ProjectViewHolder,ItemProjectBinding> {

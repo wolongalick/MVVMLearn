@@ -21,31 +21,18 @@ import java.util.Map;
  * @date 2019/4/8 15:30
  */
 public class RemoteUserDataSource implements UserDataSource {
-    private static RemoteUserDataSource instance = null;
-
-    private RemoteUserDataSource() {
-    }
-
-    public static RemoteUserDataSource getInstance() {
-        if (instance == null) {
-            synchronized (RemoteUserDataSource.class) {
-                if (instance == null) {
-                    instance = new RemoteUserDataSource();
-                }
-            }
-        }
-        return instance;
-    }
+    private MutableLiveData<BaseResponse<Account>> userMutableLiveData;
 
     @Override
     public LiveData<BaseResponse<Account>> queryUserByUsername(String username) {
         BLog.i("从网络获取数据");
-
+        if(userMutableLiveData==null){
+            userMutableLiveData=new MutableLiveData<>();
+        }
 
         Map<String,Object> params=new HashMap<>();
         params.put("nickname","小鸡子");
         params.put("age","28");
-        final MutableLiveData<BaseResponse<Account>> userMutableLiveData = new MutableLiveData<>();
         OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/"+username,params, new OkHttpUtils.OkCallback<Account>() {
             @Override
             public void onSuccess(BaseResponse<Account> baseResponse){
