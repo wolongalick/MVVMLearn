@@ -22,14 +22,14 @@ public class ProjectListViewModel extends ViewModel {
 
     private MutableLiveData<BaseResponse<List<Project>>> listMutableLiveData;
 
-    public MutableLiveData<BaseResponse<List<Project>>> getProjectsLiveData(String username, int pageNum, int pageSize) {
+    public MutableLiveData<BaseResponse<List<Project>>> getProjectsLiveData(String username, int page, int per_page) {
         if(listMutableLiveData==null){
             listMutableLiveData = new MutableLiveData<>();
         }
 
         Map<String,Object> paramsMap=new HashMap<>();
-        paramsMap.put("page",pageNum);
-        paramsMap.put("per_page",pageSize);
+        paramsMap.put("page",page);
+        paramsMap.put("per_page",per_page);
 
         OkHttpUtils.getInstance().requestGet(OkHttpUtils.BASE_URL + "users/" + username + "/repos", paramsMap, new OkHttpUtils.OkCallback<List<Project>>() {
             @Override

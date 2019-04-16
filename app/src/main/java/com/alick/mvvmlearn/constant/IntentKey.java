@@ -10,6 +10,9 @@ package com.alick.mvvmlearn.constant;
 public class IntentKey {
     public static final String USERNAME="username";
     public static final String PROJECT_DETAIL_URL="project_detail_url";
+    public static final String STARS_URL="stars_url";
+    public static final String WATCH_URL="watch_url";
+    public static final String FORK_URL="FORK_URL";
 
 
 }

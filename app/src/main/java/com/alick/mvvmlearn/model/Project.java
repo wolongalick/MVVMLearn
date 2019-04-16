@@ -38,7 +38,7 @@ public class Project {
      * trees_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/git/trees{/sha}
      * statuses_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/statuses/{sha}
      * languages_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/languages
-     * stargazers_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/stargazers
+         * stargazers_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/stargazers
      * contributors_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/contributors
      * subscribers_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/subscribers
      * subscription_url : https://api.github.com/repos/wolongalick/AlignTextViewDemo/subscription

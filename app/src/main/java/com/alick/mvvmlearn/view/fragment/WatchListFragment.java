@@ -26,16 +26,16 @@ import java.util.List;
  * @description:
  * @date 2019/4/16 16:43
  */
-public class StarListFragment extends BaseListFragment<ItemUserBinding, UserAdapter> {
+public class WatchListFragment extends BaseListFragment<ItemUserBinding, UserAdapter> {
     private StarViewModel starViewModel;
     private String url;
 
 
-    public static StarListFragment getInstance(String url) {
+    public static WatchListFragment getInstance(String url) {
         Bundle bundle = new Bundle();
-        bundle.putString(IntentKey.STARS_URL, url);
+        bundle.putString(IntentKey.WATCH_URL, url);
 
-        StarListFragment starListFragment = new StarListFragment();
+        WatchListFragment starListFragment = new WatchListFragment();
         starListFragment.setArguments(bundle);
         return starListFragment;
     }
@@ -47,7 +47,7 @@ public class StarListFragment extends BaseListFragment<ItemUserBinding, UserAdap
      */
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_star;
+        return R.layout.fragment_watch;
     }
 
 
@@ -57,7 +57,7 @@ public class StarListFragment extends BaseListFragment<ItemUserBinding, UserAdap
     @Override
     public void initData() {
         starViewModel = new StarViewModel();
-        url = getArguments().getString(IntentKey.STARS_URL);
+        url = getArguments().getString(IntentKey.WATCH_URL);
     }
 
     /**

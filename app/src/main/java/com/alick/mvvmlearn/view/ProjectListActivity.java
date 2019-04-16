@@ -82,7 +82,11 @@ public class ProjectListActivity extends BaseListActivity<ActivityProjectListBin
         projectViewBinder.setOnBinderItemClickListener(new BaseViewBinder.OnBinderItemClickListener<Project, ProjectViewBinder.ProjectViewHolder>() {
             @Override
             public void onBinderItemClick(@NonNull ProjectViewBinder.ProjectViewHolder holder, @NonNull Project project, int position) {
-                startActivity(new Intent(getApplicationContext(), ProjectDetailActivity.class).putExtra(IntentKey.PROJECT_DETAIL_URL, project.getUrl()));
+                Intent intent = new Intent(getApplicationContext(), ProjectDetailActivity.class);
+                intent.putExtra(IntentKey.PROJECT_DETAIL_URL, project.getUrl());
+                intent.putExtra(IntentKey.STARS_URL, project.getStargazers_url());
+                intent.putExtra(IntentKey.WATCH_URL, project.getSubscribers_url());
+                startActivity(intent);
             }
         });
     }

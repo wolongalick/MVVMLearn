@@ -33,7 +33,6 @@
             android:text="搜索" />
 
         <com.alick.commonlibrary.holder_view.HolderView
-            android:id="@+id/holderView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

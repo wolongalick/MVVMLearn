@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             @Override
             public void onClick(View v) {
                 searchUser();
-                mBinding.holderView.showLoadingView();
+                mHolderView.showLoadingView();
             }
         });
 
@@ -71,9 +71,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 Account account =baseResponse.getData();
                 if (account != null) {
                     mBinding.setAccount(account);
-                    mBinding.holderView.showRealContentView();
+                    mHolderView.showRealContentView();
                 }else {
-                    mBinding.holderView.showFailView();
+                    mHolderView.showFailView();
                     Toast.makeText(getApplicationContext(),baseResponse.getErrorMsg(), Toast.LENGTH_SHORT).show();
                 }
             }
