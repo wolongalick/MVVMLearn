@@ -85,6 +85,7 @@ public class StarListFragment extends BaseListFragment<ItemUserBinding, UserAdap
                 }
             }
         });
+        mHolderView.showLoadingView();
         onReload();
     }
 

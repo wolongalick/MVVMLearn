@@ -85,6 +85,7 @@ public class WatchListFragment extends BaseListFragment<ItemUserBinding, UserAda
                 }
             }
         });
+        mHolderView.showLoadingView();
         onReload();
     }
 
