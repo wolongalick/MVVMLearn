@@ -16,7 +16,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_launcher"
+            circle_image_url="@{user.avatar_url}"
             />
 
         <TextView

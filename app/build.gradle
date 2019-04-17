@@ -35,4 +35,7 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }
